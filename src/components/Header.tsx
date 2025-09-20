@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Search, ShoppingCart, User, Menu, X, Heart, MapPin } from "lucide-react";
+import { Search, ShoppingCart, User, Menu, X, Heart, MapPin, Zap, Gift } from "lucide-react";
+import { SmartSearchBar } from "./SmartSearchBar";
 
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -23,126 +24,81 @@ export const Header = () => {
   ];
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? "bg-background/95 backdrop-blur-md shadow-lg" : "bg-transparent"
-    }`}>
-      <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center">
-              <span className="text-white font-bold text-lg">F</span>
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-foreground">FreshMarket</h1>
-              <p className="text-xs text-muted-foreground">Premium Organic</p>
-            </div>
-          </div>
+    <>
+      {/* Top promotional banner */}
+      <div className="bg-gradient-primary text-white py-2 text-center text-sm relative overflow-hidden">
+        <div className="relative z-10">
+          <Zap className="inline w-4 h-4 mr-2" />
+          Flash Sale: Free delivery on orders $50+ | Use code: FRESH50
+          <Gift className="inline w-4 h-4 ml-2" />
+        </div>
+        <div className="absolute inset-0 bg-gradient-shine opacity-30 animate-[slide_3s_linear_infinite]"></div>
+      </div>
 
-          {/* Search Bar - Desktop */}
-          <div className="hidden md:flex items-center flex-1 max-w-2xl mx-8">
-            <div className="relative w-full">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-              <input
-                type="text"
-                placeholder="Search for fresh ingredients, recipes..."
-                className="w-full pl-12 pr-4 py-3 rounded-xl border border-border bg-background/80 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-              />
-            </div>
-          </div>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="text-foreground hover:text-primary transition-colors font-medium"
-              >
-                {item.name}
-              </a>
-            ))}
-          </nav>
-
-          {/* Actions */}
-          <div className="flex items-center gap-4">
-            {/* Location */}
-            <div className="hidden md:flex items-center gap-2 text-sm">
-              <MapPin className="w-4 h-4 text-primary" />
-              <span className="text-muted-foreground">Deliver to</span>
-              <span className="font-medium">90210</span>
+      <header className={`sticky top-0 z-50 transition-all duration-300 ${
+        isScrolled ? "bg-background/95 backdrop-blur-md shadow-elegant" : "bg-white/95 backdrop-blur-md border-b border-border shadow-elegant"
+      }`}>
+        <div className="container mx-auto px-4 lg:px-6">
+          {/* Main header */}
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-accent">
+                <span className="text-white font-bold text-xl">F</span>
+              </div>
+              <span className="text-2xl font-bold text-foreground">FreshMarket</span>
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex items-center gap-2">
-              <button className="p-3 hover:bg-muted rounded-xl transition-colors relative">
-                <Heart className="w-5 h-5" />
-                <span className="absolute -top-1 -right-1 bg-destructive text-destructive-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center">
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center gap-8">
+              <a href="#" className="text-foreground hover:text-primary transition-colors font-medium">Home</a>
+              <a href="#" className="text-foreground hover:text-primary transition-colors font-medium">Categories</a>
+              <a href="#" className="text-foreground hover:text-primary transition-colors font-medium">Recipes</a>
+              <a href="#" className="text-foreground hover:text-primary transition-colors font-medium">About</a>
+              <a href="#" className="text-foreground hover:text-primary transition-colors font-medium">Contact</a>
+            </nav>
+
+            {/* Actions */}
+            <div className="flex items-center gap-2 lg:gap-4">
+              {/* Search - Mobile */}
+              <button className="lg:hidden p-2 text-foreground hover:text-primary transition-colors touch-target">
+                <Search className="w-6 h-6" />
+              </button>
+
+              {/* Wishlist */}
+              <button className="relative p-2 text-foreground hover:text-primary transition-all duration-300 hover:scale-110 touch-target">
+                <Heart className="w-6 h-6" />
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-accent text-white rounded-full text-xs flex items-center justify-center animate-bounce-subtle">
                   3
                 </span>
               </button>
-              
-              <button className="p-3 hover:bg-muted rounded-xl transition-colors relative">
-                <ShoppingCart className="w-5 h-5" />
-                <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  2
+
+              {/* Cart */}
+              <button className="relative p-2 text-foreground hover:text-primary transition-all duration-300 hover:scale-110 touch-target">
+                <ShoppingCart className="w-6 h-6" />
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-white rounded-full text-xs flex items-center justify-center animate-pulse">
+                  7
                 </span>
               </button>
 
-              <button className="hidden md:flex items-center gap-2 px-4 py-2 hover:bg-muted rounded-xl transition-colors">
-                <User className="w-5 h-5" />
-                <span className="font-medium">Sign In</span>
+              {/* User */}
+              <button className="p-2 text-foreground hover:text-primary transition-all duration-300 hover:scale-110 touch-target">
+                <User className="w-6 h-6" />
               </button>
 
-              {/* Mobile Menu Button */}
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="lg:hidden p-3 hover:bg-muted rounded-xl transition-colors"
-              >
-                {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {/* Mobile Menu */}
+              <button className="lg:hidden p-2 text-foreground hover:text-primary transition-colors touch-target">
+                <Menu className="w-6 h-6" />
               </button>
             </div>
           </div>
-        </div>
 
-        {/* Mobile Search */}
-        <div className="md:hidden pb-4">
-          <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-            <input
-              type="text"
-              placeholder="Search products..."
-              className="w-full pl-12 pr-4 py-3 rounded-xl border border-border bg-background/80 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-            />
+          {/* Search Bar - Full width on desktop */}
+          <div className="hidden lg:block pb-4">
+            <SmartSearchBar />
           </div>
         </div>
-      </div>
-
-      {/* Mobile Menu */}
-      <div className={`lg:hidden transition-all duration-300 overflow-hidden ${
-        isMobileMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-      }`}>
-        <div className="bg-background/95 backdrop-blur-md border-t border-border">
-          <nav className="container mx-auto px-6 py-6 space-y-4">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="block py-2 text-foreground hover:text-primary transition-colors font-medium"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {item.name}
-              </a>
-            ))}
-            <div className="pt-4 border-t border-border">
-              <button className="flex items-center gap-2 py-2 text-foreground hover:text-primary transition-colors font-medium">
-                <User className="w-5 h-5" />
-                Sign In
-              </button>
-            </div>
-          </nav>
-        </div>
-      </div>
-    </header>
+      </header>
+    </>
   );
 };

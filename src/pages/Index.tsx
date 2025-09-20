@@ -8,12 +8,13 @@ import { RecipesSection } from "@/components/RecipesSection";
 import { CreativeFAQ } from "@/components/CreativeFAQ";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { Footer } from "@/components/Footer";
+import { MobileQuickActions } from "@/components/MobileQuickActions";
 
 const Index = () => {
   return (
     <div className="min-h-screen">
       <Header />
-      <main>
+      <main className="pb-20 sm:pb-0">
         <HeroSection />
         <TopCategories />
         <ProductGrid />
@@ -24,6 +25,7 @@ const Index = () => {
         <NewsletterSignup />
       </main>
       <Footer />
+      <MobileQuickActions />
     </div>
   );
 };

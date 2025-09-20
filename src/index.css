@@ -2,41 +2,61 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Premium Ecommerce Design System - Performance Optimized */
 
 @layer base {
   :root {
+    /* Core Brand Colors */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 210 15% 20%;
 
+    /* Primary Brand - Modern Orange/Coral */
+    --primary: 15 88% 55%;
+    --primary-light: 15 88% 65%;
+    --primary-dark: 15 88% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary - Deep Teal */
+    --secondary: 180 25% 25%;
+    --secondary-light: 180 25% 35%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* Accent - Warm Gold */
+    --accent: 45 100% 60%;
+    --accent-light: 45 100% 70%;
+    --accent-foreground: 210 15% 20%;
+
+    /* Neutrals */
+    --muted: 210 40% 96%;
+    --muted-foreground: 210 15% 40%;
+    --border: 210 20% 90%;
+    --input: 210 20% 95%;
+    --ring: 15 88% 55%;
+
+    /* Cards */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 210 15% 20%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    /* Success & Error */
+    --success: 142 70% 45%;
+    --success-foreground: 0 0% 100%;
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 0 0% 100%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-light)) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(var(--secondary-light)) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 50%, hsl(var(--secondary)) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--muted)) 100%);
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(var(--primary) / 0.15);
+    --shadow-medium: 0 8px 30px -6px hsl(var(--primary) / 0.2);
+    --shadow-strong: 0 16px 40px -8px hsl(var(--primary) / 0.25);
+    --shadow-glow: 0 0 40px hsl(var(--primary) / 0.3);
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
+    /* Layout */
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +120,112 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+  }
+
+  /* Performance optimizations */
+  img {
+    @apply object-cover;
+  }
+}
+
+@layer components {
+  /* Hero Button Variants */
+  .btn-hero {
+    @apply bg-gradient-to-r from-primary to-primary-light text-primary-foreground px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground px-6 py-3 rounded-xl font-medium hover:bg-secondary-light transition-all duration-300;
+  }
+
+  .btn-ghost {
+    @apply border-2 border-primary text-primary px-6 py-3 rounded-xl font-medium hover:bg-primary hover:text-primary-foreground transition-all duration-300;
+  }
+
+  /* Card Variants */
+  .card-elevated {
+    @apply bg-card rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-border;
+  }
+
+  .card-product {
+    @apply bg-card rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-border hover:scale-105 cursor-pointer;
+  }
+
+  /* Section Backgrounds */
+  .section-gradient {
+    background: var(--gradient-subtle);
+  }
+
+  .section-hero {
+    background: var(--gradient-hero);
+  }
+
+  /* Animations */
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.4s ease-out forwards;
+  }
+
+  .animate-slide-in-left {
+    animation: slideInLeft 0.6s ease-out forwards;
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.6s ease-out forwards;
+  }
+
+  /* Skeleton Loading */
+  .skeleton {
+    @apply bg-muted animate-pulse rounded;
+  }
+
+  .skeleton-text {
+    @apply h-4 bg-muted animate-pulse rounded;
+  }
+
+  .skeleton-image {
+    @apply bg-muted animate-pulse rounded aspect-square;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }

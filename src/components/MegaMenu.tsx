@@ -9,6 +9,14 @@ interface MegaMenuProps {
 
 export const MegaMenu = ({ isOpen, onClose }: MegaMenuProps) => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  
+  const handleMouseEnter = () => {
+    // Keep mega menu open when hovering over it
+  };
+  
+  const handleMouseLeave = () => {
+    onClose();
+  };
 
   const categories = [
     {
@@ -67,11 +75,15 @@ export const MegaMenu = ({ isOpen, onClose }: MegaMenuProps) => {
   return (
     <>
       {/* Desktop Mega Menu */}
-      <div className={`
-        hidden lg:block absolute top-full left-0 w-full bg-white/95 backdrop-blur-md border-b border-border shadow-elegant
-        transition-all duration-300 z-40
-        ${isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-4'}
-      `}>
+      <div 
+        className={`
+          hidden lg:block absolute top-full left-0 w-full bg-white/95 backdrop-blur-md border-b border-border shadow-elegant
+          transition-all duration-300 z-40
+          ${isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-4'}
+        `}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
         <div className="container mx-auto px-6 py-8">
           <div className="grid grid-cols-4 gap-8">
             {categories.map((category) => (

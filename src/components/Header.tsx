@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { SmartSearchBar } from "./SmartSearchBar";
 import { MegaMenu } from "./MegaMenu";
 import { MiniCart } from "./MiniCart";
+import { MobileQuickActions } from "./MobileQuickActions";
 
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -144,9 +145,10 @@ export const Header = () => {
 
         {/* Mega Menu */}
         <MegaMenu 
-          isOpen={isMegaMenuOpen} 
+          isOpen={isMegaMenuOpen || isMobileMenuOpen} 
           onClose={() => {
             setIsMegaMenuOpen(false);
+            setIsMobileMenuOpen(false);
             setHoveredMenu(null);
           }} 
         />
@@ -179,6 +181,13 @@ export const Header = () => {
       <MiniCart 
         isOpen={isMiniCartOpen} 
         onClose={() => setIsMiniCartOpen(false)} 
+      />
+
+      {/* Mobile Quick Actions */}
+      <MobileQuickActions 
+        onMenuClick={() => setIsMobileMenuOpen(true)}
+        onSearchClick={() => setIsMobileSearchOpen(true)}
+        onCartClick={() => setIsMiniCartOpen(true)}
       />
     </>
   );

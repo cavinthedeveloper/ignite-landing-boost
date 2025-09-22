@@ -1,4 +1,5 @@
 import { Search, Heart, ShoppingCart, User, Menu } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const MobileQuickActions = () => {
   return (
@@ -9,25 +10,34 @@ export const MobileQuickActions = () => {
             <Search className="w-5 h-5" />
             <span className="text-xs">Search</span>
           </button>
-          <button className="flex flex-col items-center gap-1 p-3 touch-target text-white hover:text-primary transition-colors relative">
+          <Link 
+            to="/account/wishlist"
+            className="flex flex-col items-center gap-1 p-3 touch-target text-white hover:text-primary transition-colors relative"
+          >
             <Heart className="w-5 h-5" />
             <span className="text-xs">Wishlist</span>
             <div className="absolute -top-1 -right-1 w-4 h-4 bg-accent rounded-full flex items-center justify-center">
               <span className="text-xs font-bold text-white">3</span>
             </div>
-          </button>
-          <button className="flex flex-col items-center gap-1 p-3 touch-target text-white hover:text-primary transition-colors relative">
+          </Link>
+          <Link 
+            to="/cart"
+            className="flex flex-col items-center gap-1 p-3 touch-target text-white hover:text-primary transition-colors relative"
+          >
             <div className="w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center shadow-glow">
               <ShoppingCart className="w-6 h-6 text-white" />
             </div>
             <div className="absolute -top-1 -right-1 w-5 h-5 bg-accent rounded-full flex items-center justify-center animate-bounce-subtle">
               <span className="text-xs font-bold text-white">7</span>
             </div>
-          </button>
-          <button className="flex flex-col items-center gap-1 p-3 touch-target text-white hover:text-primary transition-colors">
+          </Link>
+          <Link 
+            to="/account"
+            className="flex flex-col items-center gap-1 p-3 touch-target text-white hover:text-primary transition-colors"
+          >
             <User className="w-5 h-5" />
             <span className="text-xs">Account</span>
-          </button>
+          </Link>
           <button className="flex flex-col items-center gap-1 p-3 touch-target text-white hover:text-primary transition-colors">
             <Menu className="w-5 h-5" />
             <span className="text-xs">Menu</span>

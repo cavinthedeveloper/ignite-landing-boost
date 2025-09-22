@@ -1,10 +1,17 @@
 import { useState, useEffect } from "react";
-import { Search, ShoppingCart, User, Menu, X, Heart, MapPin, Zap, Gift } from "lucide-react";
+import { Search, ShoppingCart, User, Menu, X, Heart, MapPin, Zap, Gift, ChevronDown } from "lucide-react";
+import { Link } from "react-router-dom";
 import { SmartSearchBar } from "./SmartSearchBar";
+import { MegaMenu } from "./MegaMenu";
+import { MiniCart } from "./MiniCart";
 
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
+  const [isMiniCartOpen, setIsMiniCartOpen] = useState(false);
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
+  const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,11 +23,11 @@ export const Header = () => {
   }, []);
 
   const navItems = [
-    { name: "Categories", href: "#categories" },
-    { name: "Products", href: "#products" },
-    { name: "Recipes", href: "#recipes" },
-    { name: "About", href: "#about" },
-    { name: "Contact", href: "#contact" }
+    { name: "Home", href: "/", hasDropdown: true },
+    { name: "Shop", href: "/shop", hasDropdown: true },
+    { name: "Categories", href: "/categories", hasDropdown: true },
+    { name: "Blog", href: "/blog", hasDropdown: true },
+    { name: "Pages", href: "/pages", hasDropdown: true }
   ];
 
   return (
@@ -42,39 +49,69 @@ export const Header = () => {
           {/* Main header */}
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <div className="flex items-center gap-3">
+            <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-transform duration-300">
               <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-accent">
                 <span className="text-white font-bold text-xl">F</span>
               </div>
               <span className="text-2xl font-bold text-foreground">FreshMarket</span>
-            </div>
+            </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-8">
-              <a href="#" className="text-foreground hover:text-primary transition-colors font-medium">Home</a>
-              <a href="#" className="text-foreground hover:text-primary transition-colors font-medium">Categories</a>
-              <a href="#" className="text-foreground hover:text-primary transition-colors font-medium">Recipes</a>
-              <a href="#" className="text-foreground hover:text-primary transition-colors font-medium">About</a>
-              <a href="#" className="text-foreground hover:text-primary transition-colors font-medium">Contact</a>
+            <nav 
+              className="hidden lg:flex items-center gap-8"
+              onMouseLeave={() => {
+                setIsMegaMenuOpen(false);
+                setHoveredMenu(null);
+              }}
+            >
+              {navItems.map((item) => (
+                <div
+                  key={item.name}
+                  className="relative"
+                  onMouseEnter={() => {
+                    if (item.hasDropdown) {
+                      setIsMegaMenuOpen(true);
+                      setHoveredMenu(item.name);
+                    }
+                  }}
+                >
+                  <Link
+                    to={item.href}
+                    className="flex items-center gap-1 text-foreground hover:text-primary transition-colors font-medium py-2"
+                  >
+                    {item.name}
+                    {item.hasDropdown && <ChevronDown className="w-4 h-4" />}
+                  </Link>
+                </div>
+              ))}
             </nav>
 
             {/* Actions */}
             <div className="flex items-center gap-2 lg:gap-4">
               {/* Search - Mobile */}
-              <button className="lg:hidden p-2 text-foreground hover:text-primary transition-colors touch-target">
+              <button 
+                onClick={() => setIsMobileSearchOpen(true)}
+                className="lg:hidden p-2 text-foreground hover:text-primary transition-colors touch-target"
+              >
                 <Search className="w-6 h-6" />
               </button>
 
               {/* Wishlist */}
-              <button className="relative p-2 text-foreground hover:text-primary transition-all duration-300 hover:scale-110 touch-target">
+              <Link
+                to="/account/wishlist"
+                className="relative p-2 text-foreground hover:text-primary transition-all duration-300 hover:scale-110 touch-target"
+              >
                 <Heart className="w-6 h-6" />
                 <span className="absolute -top-1 -right-1 w-5 h-5 bg-accent text-white rounded-full text-xs flex items-center justify-center animate-bounce-subtle">
                   3
                 </span>
-              </button>
+              </Link>
 
               {/* Cart */}
-              <button className="relative p-2 text-foreground hover:text-primary transition-all duration-300 hover:scale-110 touch-target">
+              <button 
+                onClick={() => setIsMiniCartOpen(true)}
+                className="relative p-2 text-foreground hover:text-primary transition-all duration-300 hover:scale-110 touch-target"
+              >
                 <ShoppingCart className="w-6 h-6" />
                 <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-white rounded-full text-xs flex items-center justify-center animate-pulse">
                   7
@@ -82,12 +119,18 @@ export const Header = () => {
               </button>
 
               {/* User */}
-              <button className="p-2 text-foreground hover:text-primary transition-all duration-300 hover:scale-110 touch-target">
+              <Link
+                to="/account"
+                className="p-2 text-foreground hover:text-primary transition-all duration-300 hover:scale-110 touch-target"
+              >
                 <User className="w-6 h-6" />
-              </button>
+              </Link>
 
               {/* Mobile Menu */}
-              <button className="lg:hidden p-2 text-foreground hover:text-primary transition-colors touch-target">
+              <button 
+                onClick={() => setIsMobileMenuOpen(true)}
+                className="lg:hidden p-2 text-foreground hover:text-primary transition-colors touch-target"
+              >
                 <Menu className="w-6 h-6" />
               </button>
             </div>
@@ -98,7 +141,45 @@ export const Header = () => {
             <SmartSearchBar />
           </div>
         </div>
+
+        {/* Mega Menu */}
+        <MegaMenu 
+          isOpen={isMegaMenuOpen} 
+          onClose={() => {
+            setIsMegaMenuOpen(false);
+            setHoveredMenu(null);
+          }} 
+        />
       </header>
+
+      {/* Mobile Search Overlay */}
+      <div className={`
+        lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 transition-all duration-300
+        ${isMobileSearchOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}
+      `}>
+        <div className={`
+          absolute top-0 left-0 right-0 bg-white p-4 transition-transform duration-300
+          ${isMobileSearchOpen ? 'translate-y-0' : '-translate-y-full'}
+        `}>
+          <div className="flex items-center gap-4">
+            <div className="flex-1">
+              <SmartSearchBar />
+            </div>
+            <button
+              onClick={() => setIsMobileSearchOpen(false)}
+              className="p-2 text-foreground hover:text-primary transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mini Cart */}
+      <MiniCart 
+        isOpen={isMiniCartOpen} 
+        onClose={() => setIsMiniCartOpen(false)} 
+      />
     </>
   );
 };

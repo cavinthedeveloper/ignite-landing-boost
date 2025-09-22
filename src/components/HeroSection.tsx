@@ -1,33 +1,57 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, ShoppingCart, Star } from "lucide-react";
+import heroFreshMarket from "@/assets/hero-fresh-market.jpg";
+import heroShopping from "@/assets/hero-shopping.jpg";
+import heroHealthyCooking from "@/assets/hero-healthy-cooking.jpg";
 import heroOrganic from "@/assets/hero-organic-food.jpg";
 import heroCooking from "@/assets/hero-cooking.jpg";
 import heroStore from "@/assets/hero-store.jpg";
 
 const slides = [
   {
-    image: heroOrganic,
-    title: "Premium Organic Foods",
-    subtitle: "Farm Fresh Quality",
-    description: "Discover the finest organic ingredients sourced directly from sustainable farms. Taste the difference quality makes.",
-    cta: "Shop Organic",
-    badge: "Best Seller"
+    image: heroFreshMarket,
+    title: "Fresh & Organic",
+    subtitle: "Farm to Table Excellence",
+    description: "Premium quality organic produce delivered fresh to your doorstep. Experience the taste of nature's finest.",
+    cta: "Shop Fresh Now",
+    badge: "🌿 100% Organic",
+    offer: "50% OFF First Order"
+  },
+  {
+    image: heroShopping,
+    title: "Premium Shopping",
+    subtitle: "Luxury Experience", 
+    description: "Discover our premium selection of fresh produce in a world-class shopping environment",
+    cta: "Explore Premium",
+    badge: "⭐ Premium Quality",
+    offer: "Free Delivery $50+"
+  },
+  {
+    image: heroHealthyCooking,
+    title: "Healthy Living",
+    subtitle: "Cook with Passion",
+    description: "Transform your kitchen into a gourmet paradise with our fresh, locally-sourced ingredients",
+    cta: "Start Cooking",
+    badge: "👨‍🍳 Chef Approved",
+    offer: "Recipe Book FREE"
   },
   {
     image: heroCooking,
-    title: "Delicious Recipes",
-    subtitle: "Cook Like a Chef",
-    description: "Transform fresh ingredients into culinary masterpieces with our expertly crafted recipes and cooking guides.",
+    title: "Gourmet Recipes", 
+    subtitle: "Master Chef Collection",
+    description: "Unlock professional cooking secrets with our curated selection of premium ingredients",
     cta: "Explore Recipes",
-    badge: "New"
+    badge: "🏆 Award Winning",
+    offer: "Cooking Class FREE"
   },
   {
     image: heroStore,
-    title: "Fast Delivery",
-    subtitle: "Fresh to Your Door",
-    description: "Premium quality ingredients delivered fresh to your doorstep within hours. Convenience meets excellence.",
-    cta: "Order Now",
-    badge: "Free Shipping"
+    title: "Express Delivery",
+    subtitle: "Lightning Fast",
+    description: "Get your groceries delivered within 30 minutes. Fresh, fast, and completely reliable.",
+    cta: "Order Express",
+    badge: "⚡ 30-Min Delivery",
+    offer: "Same Day Guarantee"
   }
 ];
 
@@ -108,8 +132,13 @@ export const HeroSection = () => {
       <div className="relative z-10 h-full flex items-center">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="max-w-3xl animate-fade-in-up">
-            {/* Enhanced Badge */}
-            <div className="inline-flex items-center gap-2 glass text-white px-6 py-3 rounded-full text-sm font-medium mb-6 hover-glow animate-bounce-subtle">
+            {/* Offer Badge */}
+            <div className="inline-flex items-center gap-2 bg-gradient-accent text-white px-6 py-3 rounded-full text-sm font-bold mb-4 animate-bounce-subtle shadow-accent border border-white/20">
+              🔥 {slides[currentSlide].offer}
+            </div>
+
+            {/* Quality Badge */}
+            <div className="inline-flex items-center gap-2 glass text-white px-6 py-3 rounded-full text-sm font-medium mb-6 hover-glow">
               <Star className="w-4 h-4 fill-current text-accent" />
               {slides[currentSlide].badge}
               <span className="w-2 h-2 bg-accent rounded-full animate-pulse"></span>

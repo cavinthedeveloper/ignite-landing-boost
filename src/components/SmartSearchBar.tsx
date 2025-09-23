@@ -24,7 +24,7 @@ export const SmartSearchBar = () => {
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           placeholder="Search for fresh groceries, recipes, or brands..."
-          className="w-full pl-12 pr-24 py-4 text-lg border-0 rounded-2xl bg-white/95 backdrop-blur-sm shadow-elegant focus:shadow-premium focus:ring-2 focus:ring-primary/20 transition-all duration-300"
+          className="w-full pl-12 pr-24 py-3 text-base border-0 rounded-xl bg-white/95 backdrop-blur-sm shadow-elegant focus:shadow-premium focus:ring-2 focus:ring-primary/20 transition-all duration-300"
         />
         
         <div className="absolute inset-y-0 right-0 flex items-center pr-3 gap-2">
@@ -50,19 +50,6 @@ export const SmartSearchBar = () => {
         </div>
       </div>
       
-      {/* Trending searches */}
-      <div className="flex items-center gap-2 mt-3 flex-wrap">
-        <span className="text-sm text-muted-foreground">Trending:</span>
-        {trendingSearches.map((search, index) => (
-          <button
-            key={index}
-            onClick={() => setSearchValue(search.split(' ').slice(1).join(' '))}
-            className="px-3 py-1 text-sm bg-gradient-card rounded-full hover:bg-primary/10 hover:text-primary transition-all duration-300 border border-border hover:border-primary/20"
-          >
-            {search}
-          </button>
-        ))}
-      </div>
     </div>
   );
 };

@@ -166,7 +166,7 @@
   }
 
   .animate-float {
-    animation: float 6s ease-in-out infinite;
+    animation: none;
   }
 
   .animate-pulse-slow {

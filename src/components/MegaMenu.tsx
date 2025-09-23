@@ -15,7 +15,10 @@ export const MegaMenu = ({ isOpen, onClose }: MegaMenuProps) => {
   };
   
   const handleMouseLeave = () => {
-    onClose();
+    // Small delay to prevent accidental closes
+    setTimeout(() => {
+      onClose();
+    }, 100);
   };
 
   const categories = [

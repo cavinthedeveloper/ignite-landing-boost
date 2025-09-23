@@ -1,27 +1,48 @@
 import { useState, useEffect } from "react";
 import { Star, ShoppingCart, Heart } from "lucide-react";
+import { Link } from "react-router-dom";
 import { ProductGridSkeleton } from "./ProductSkeleton";
+import avocadosImg from "@/assets/product-avocados.jpg";
+import salmonImg from "@/assets/product-salmon.jpg";
+import breadImg from "@/assets/product-bread.jpg";
+import honeyImg from "@/assets/product-honey.jpg";
+import eggsImg from "@/assets/product-eggs.jpg";
+import spinachImg from "@/assets/product-spinach.jpg";
 
 // Mock product data - in real app, this would come from an API
 const generateProducts = () => {
-  const names = [
-    "Organic Avocados", "Fresh Salmon", "Artisan Bread", "Local Honey", "Free-Range Eggs",
-    "Organic Spinach", "Wild Blueberries", "Aged Cheese", "Premium Olive Oil", "Fresh Basil",
-    "Organic Tomatoes", "Grass-Fed Beef", "Quinoa Grains", "Coconut Milk", "Dark Chocolate",
-    "Fresh Lemons", "Organic Carrots", "Almond Butter", "Greek Yogurt", "Heirloom Apples"
+  const products = [
+    { name: "Organic Avocados", category: "Fruits", image: avocadosImg },
+    { name: "Fresh Salmon", category: "Meat", image: salmonImg },
+    { name: "Artisan Bread", category: "Bakery", image: breadImg },
+    { name: "Local Honey", category: "Pantry", image: honeyImg },
+    { name: "Free-Range Eggs", category: "Dairy", image: eggsImg },
+    { name: "Organic Spinach", category: "Vegetables", image: spinachImg },
+    { name: "Wild Blueberries", category: "Fruits", image: avocadosImg },
+    { name: "Aged Cheese", category: "Dairy", image: eggsImg },
+    { name: "Premium Olive Oil", category: "Pantry", image: honeyImg },
+    { name: "Fresh Basil", category: "Vegetables", image: spinachImg },
+    { name: "Organic Tomatoes", category: "Vegetables", image: spinachImg },
+    { name: "Grass-Fed Beef", category: "Meat", image: salmonImg },
+    { name: "Quinoa Grains", category: "Pantry", image: honeyImg },
+    { name: "Coconut Milk", category: "Dairy", image: eggsImg },
+    { name: "Dark Chocolate", category: "Pantry", image: honeyImg },
+    { name: "Fresh Lemons", category: "Fruits", image: avocadosImg },
+    { name: "Organic Carrots", category: "Vegetables", image: spinachImg },
+    { name: "Almond Butter", category: "Pantry", image: honeyImg },
+    { name: "Greek Yogurt", category: "Dairy", image: eggsImg },
+    { name: "Heirloom Apples", category: "Fruits", image: avocadosImg }
   ];
-  
-  const categories = ["Fruits", "Vegetables", "Dairy", "Meat", "Pantry", "Bakery"];
   
   return Array.from({ length: 18 }, (_, index) => ({
     id: index + 1,
-    name: names[index] || `Product ${index + 1}`,
-    category: categories[index % categories.length],
+    name: products[index]?.name || `Product ${index + 1}`,
+    category: products[index]?.category || "Groceries",
     price: (Math.random() * 20 + 5).toFixed(2),
     originalPrice: (Math.random() * 30 + 15).toFixed(2),
     rating: (Math.random() * 2 + 3).toFixed(1),
     reviews: Math.floor(Math.random() * 500 + 50),
-    image: `https://picsum.photos/400/300?random=${index + 1}`,
+    image: products[index]?.image || avocadosImg,
     badge: index % 4 === 0 ? "New" : index % 4 === 1 ? "Sale" : index % 4 === 2 ? "Organic" : null,
     inStock: Math.random() > 0.1
   }));
@@ -84,8 +105,9 @@ export const ProductGrid = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.map((product, index) => (
-            <div
+            <Link
               key={product.id}
+              to={`/shop/product/${product.id}`}
               className="card-product group relative animate-fade-in"
               style={{ animationDelay: `${index * 50}ms` }}
             >
@@ -172,14 +194,14 @@ export const ProductGrid = () => {
                   </div>
                 )}
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 
         <div className="text-center mt-12">
-          <button className="btn-ghost">
+          <Link to="/shop/grid" className="btn-ghost">
             View All Products
-          </button>
+          </Link>
         </div>
       </div>
     </section>

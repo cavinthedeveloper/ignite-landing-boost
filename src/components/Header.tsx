@@ -61,8 +61,11 @@ export const Header = () => {
             <nav 
               className="hidden lg:flex items-center gap-8"
               onMouseLeave={() => {
-                setIsMegaMenuOpen(false);
-                setHoveredMenu(null);
+                // Delay close to allow moving to mega menu
+                setTimeout(() => {
+                  setIsMegaMenuOpen(false);
+                  setHoveredMenu(null);
+                }, 150);
               }}
             >
               {navItems.map((item) => (
@@ -137,9 +140,11 @@ export const Header = () => {
             </div>
           </div>
 
-          {/* Search Bar - Full width on desktop */}
-          <div className="hidden lg:block pb-4">
-            <SmartSearchBar />
+          {/* Search Bar - Centered on desktop */}
+          <div className="hidden lg:flex justify-center items-center pb-3 pt-2">
+            <div className="w-full max-w-xl">
+              <SmartSearchBar />
+            </div>
           </div>
         </div>
 
